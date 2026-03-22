@@ -7,7 +7,7 @@ const api = axios.create({
     },
 });
 
-export const ObatAPI = {
+export const obatAPI = {
     getAll: () => api.get('/obat'),
     getById: (id: string) => api.get(`/obat/${id}`),
     create: (data: object) => api.post('/obat', data),
