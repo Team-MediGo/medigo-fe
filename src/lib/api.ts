@@ -10,8 +10,16 @@ const api = axios.create({
 export const obatAPI = {
     getAll: () => api.get('/obat'),
     getById: (id: string) => api.get(`/obat/${id}`),
-    create: (data: object) => api.post('/obat', data),
-    update: (id: string, data: object) => api.put(`/obat/${id}`, data),
+    create: (data: FormData) => api.post('/obat', data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        }
+    }),
+    update: (id: string, data: FormData) => api.put(`/obat/${id}`, data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        }
+    }),
     delete: (id: string) => api.delete(`/obat/${id}`)
 }
 
