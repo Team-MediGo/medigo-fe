@@ -60,6 +60,7 @@ export default function MedicinesPage() {
         formData.append('stok', form.stok.toString())
         if (form.image) formData.append('image', form.image)
 
+        setLoading(true)
         try {
             await obatAPI.create(formData)
             setOpenAdd(false)
@@ -67,6 +68,7 @@ export default function MedicinesPage() {
             fetchMedicines()
         } catch (err) {
             console.log("gagal tambah obat", err)
+            setLoading(false)
         }
     }
 
@@ -79,6 +81,7 @@ export default function MedicinesPage() {
         formData.append('stok', form.stok.toString())
         if (form.image) formData.append('image', form.image)
 
+        setLoading(true)
         try {
             await obatAPI.update(selected!.id, formData)
             setOpenEdit(false)
@@ -87,12 +90,14 @@ export default function MedicinesPage() {
             fetchMedicines()
         } catch (err) {
             console.error("gagal update obat", err)
+            setLoading(false)
         }
     }
 
     //delete obat
     const handleDelete = async () => {
         if (!selected) return
+        setLoading(true)
         try {
             await obatAPI.delete(selected!.id)
             setOpenDelete(false)
@@ -100,6 +105,7 @@ export default function MedicinesPage() {
             fetchMedicines()
         } catch (err) {
             console.error("gagal delete obat", err)
+            setLoading(false)
         }
     }
 
@@ -213,7 +219,13 @@ export default function MedicinesPage() {
                                     setOpenAdd(false)
                                     setForm({ nama: '', kategori: '', harga: 0, stok: 0, image: null })
                                 }}>Cancel</Button>
-                                <Button className="bg-green-600 hover:bg-green-700" onClick={handleCreateObat} disabled={loading}>{loading ? 'Meyimpan...' : 'Tambah'}</Button>
+                                <Button
+                                    className="bg-green-600 hover:bg-green-700"
+                                    onClick={handleCreateObat}
+                                    disabled={loading}
+                                >
+                                    {loading ? 'Menyimpan...' : 'Tambah'}
+                                </Button>
                             </div>
                         </DialogFooter>
 
@@ -433,8 +445,9 @@ export default function MedicinesPage() {
                         <Button
                             className="bg-green-600 hover:bg-green-700"
                             onClick={UpdateObat}
+                            disabled={loading}
                         >
-                            Update
+                            {loading ? 'Menyimpan...' : 'Update'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
@@ -464,8 +477,9 @@ export default function MedicinesPage() {
                         <Button
                             variant="destructive"
                             onClick={handleDelete}
+                            disabled={loading}
                         >
-                            Hapus
+                            {loading ? 'Menghapus...' : 'Hapus'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
