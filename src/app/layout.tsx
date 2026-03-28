@@ -28,13 +28,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geist.className} bg-gray-50`}>
-        <div className="flex h-screen overflow-hidden">
-          <Sidebar />
-          <main className="flex-1 overflow-y-auto">
-            {children}
-          </main>
-        </div>
+        {children}
       </body>
     </html>
-  );
+  )
 }

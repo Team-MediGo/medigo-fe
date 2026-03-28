@@ -2,9 +2,12 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, Pill, ShoppingCart, BarChart3, Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { LayoutDashboard, Pill, ShoppingCart, BarChart3, Menu, X, LogOut } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
+import { getUser, removeAuth } from '@/lib/auth'
+import type { User } from "@/types"
+import { useRouter } from "next/navigation"
 
 const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -17,6 +20,17 @@ const navItems = [
 export default function Sidebar() {
     const pathname = usePathname()
     const [collapsed, setCollapsed] = useState(false)
+    const [user, setUser] = useState<User | null>(null)
+    const router = useRouter()
+
+    useEffect(() => {
+        setUser(getUser())
+    }, [])
+
+    const handleLogout = () => {
+        removeAuth()
+        router.push('/login')
+    }
 
     return (
         <aside className={cn(
@@ -61,11 +75,21 @@ export default function Sidebar() {
                 })}
             </nav>
 
-            {!collapsed && (
-                <div className="p-4 border-t border-gray-200">
-                    <p className="text-xs text-gray-400">MediGo Admin v1.0</p>
-                </div>
-            )}
+            <div className="p-3 border-t border-gray-200">
+                {!collapsed && user && (
+                    <div className="px-2 py-2 mb-2">
+                        <p className="text-sm font-medium text-gray-800 truncate">{user.nama}</p>
+                        <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                    </div>
+                )}
+                <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg w-full text-red-500 hover:bg-red-50 transition-colors"
+                >
+                    <LogOut size={18} />
+                    {!collapsed && <span className="text-sm">Logout</span>}
+                </button>
+            </div>
         </aside>
     )
 
