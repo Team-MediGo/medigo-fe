@@ -213,7 +213,7 @@ export default function MedicinesPage() {
                                     setOpenAdd(false)
                                     setForm({ nama: '', kategori: '', harga: 0, stok: 0, image: null })
                                 }}>Cancel</Button>
-                                <Button className="bg-green-600 hover:bg-green-700" onClick={handleCreateObat}>Tambah</Button>
+                                <Button className="bg-green-600 hover:bg-green-700" onClick={handleCreateObat} disabled={loading}>{loading ? 'Meyimpan...' : 'Tambah'}</Button>
                             </div>
                         </DialogFooter>
 
