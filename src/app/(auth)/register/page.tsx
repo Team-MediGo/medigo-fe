@@ -55,7 +55,7 @@ export default function LoginPage() {
                 </div>
 
                 {/* title */}
-                <div className="mb-6">
+                <div className="mb-6 text-center">
                     <h1 className="text-xl font-bold text-gray-900">Buat akun baru</h1>
                     <p className="text-sm text-gray-500 mt-1">Daftar sebagai admin MediGo</p>
                 </div>
